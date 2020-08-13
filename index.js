@@ -2,21 +2,21 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const SettingsFactoryFunction = require('./settingBill-factory');
-
 const app = express();
 const settingsBill = SettingsFactoryFunction();
-app.use(express.static('public'))
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
-
-// parse application/x-www-form-urlencoded
+app.use(express.static('public'))
+    // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
-    res.render('index');
+    res.render('index', {
+
+    });
 });
 
 app.post("/settings", function(req, res) {
@@ -29,7 +29,10 @@ app.post("/settings", function(req, res) {
     });
     console.log(settingsBill.getSettings())
         // note that data can be sent to the template
-    res.redirect("/")
+    res.render('index', {
+        settings: settingsBill.getSettings()
+    });
+
 
 });
 
@@ -52,7 +55,3 @@ const PORT = process.env.PORT || 3007;
 app.listen(PORT, function() {
     console.log('App starting on port', PORT);
 });
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
-    // parse application/json
-app.use(bodyParser.json())

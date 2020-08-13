@@ -1,31 +1,33 @@
+let assert = require("assert");
+let SettingsFactoryFunction = require("../settingBill-factory");
 describe("The update values button function for settingsBill", function() {
     it("should update the values of the SettingsWithFactory", function() {
         var PreSetCosts = SettingsFactoryFunction();
         var constants = {
-            callSetting: "1.50",
-            smsSetting: "0.50",
-            warningSetting: "10.50",
-            criticalSetting: "15.50"
+            callCost: "1.50",
+            smsCost: "0.50",
+            warningLevel: "10.50",
+            criticalLevel: "15.50"
         }
         assert.equal(true, PreSetCosts.updateValues(constants))
     });
     it("should update the values of the SettingsWithFactory", function() {
         var PreSetCosts = SettingsFactoryFunction();
         var constants = {
-            callSetting: "kgs",
-            smsSetting: "0.50",
-            warningSetting: "10.50",
-            criticalSetting: "15.50"
+            callCost: "kgs",
+            smsCost: "0.50",
+            warningLevel: "10.50",
+            criticalLevel: "15.50"
         }
         assert.equal(false, PreSetCosts.updateValues(constants))
     });
     it("should update the values of the SettingsWithFactory", function() {
         var PreSetCosts = SettingsFactoryFunction();
         var constants = {
-            callSetting: ".25",
-            smsSetting: "0.50",
-            warningSetting: "10.50",
-            criticalSetting: "15.50"
+            callCost: ".25",
+            smsCost: "0.50",
+            warningLevel: "10.50",
+            criticalLevel: "15.50"
         }
         assert.equal(true, PreSetCosts.updateValues(constants))
     });
@@ -35,10 +37,10 @@ describe("The addFunction test for settings and radio", function() {
     it("should return true if call was clicked", function() {
         var PreSetCosts = SettingsFactoryFunction();
         var constants = {
-            callSetting: "1.50",
-            smsSetting: "0.50",
-            warningSetting: "10.50",
-            criticalSetting: "15.50"
+            callCost: "1.50",
+            smsCost: "0.50",
+            warningLevel: "10.50",
+            criticalLevel: "15.50"
         }
         PreSetCosts.updateValues(constants)
         assert.equal(true, PreSetCosts.addFunction("call"))
@@ -46,10 +48,10 @@ describe("The addFunction test for settings and radio", function() {
     it("should return true if sms was clicked", function() {
         var PreSetCosts = SettingsFactoryFunction();
         var constants = {
-            callSetting: "1.50",
-            smsSetting: "0.50",
-            warningSetting: "10.50",
-            criticalSetting: "15.50"
+            callCost: "1.50",
+            smsCost: "0.50",
+            warningLevel: "10.50",
+            criticalLevel: "15.50"
         }
         PreSetCosts.updateValues(constants)
         assert.equal(true, PreSetCosts.addFunction("sms"))
@@ -57,10 +59,10 @@ describe("The addFunction test for settings and radio", function() {
     it("should return false if not call or sms", function() {
         var PreSetCosts = SettingsFactoryFunction();
         var constants = {
-            callSetting: "1.50",
-            smsSetting: "0.50",
-            warningSetting: "10.50",
-            criticalSetting: "15.50"
+            callCost: "1.50",
+            smsCost: "0.50",
+            warningLevel: "10.50",
+            criticalLevel: "15.50"
         }
         PreSetCosts.updateValues(constants)
         assert.equal(false, PreSetCosts.addFunction("fruit"))
@@ -71,10 +73,10 @@ describe("The settingsBillTotal function", function() {
     it("should return the correct totals when added up", function() {
         var myPresetTest = SettingsFactoryFunction()
         var newConstants = {
-            callSetting: "2.75",
-            smsSetting: "0.75",
-            warningSetting: "30.00",
-            criticalSetting: "50.00"
+            callCost: "2.75",
+            smsCost: "0.75",
+            warningLevel: "30.00",
+            criticalLevel: "50.00"
         }
         myPresetTest.updateValues(newConstants)
         myPresetTest.addFunction("call")
@@ -88,10 +90,10 @@ describe("The settingsBillTotal function", function() {
     it("should return the correct totals when added up", function() {
         var myPresetTest = SettingsFactoryFunction()
         var newConstants = {
-            callSetting: "2.75",
-            smsSetting: "0.75",
-            warningSetting: "30.00",
-            criticalSetting: "50.00"
+            callCost: "2.75",
+            smsCost: "0.75",
+            warningLevel: "30.00",
+            criticalLevel: "50.00"
         }
         myPresetTest.updateValues(newConstants)
         myPresetTest.addFunction("call")
@@ -109,10 +111,10 @@ describe("The settingsBillTotal function", function() {
     it("should return the correct totals when added up", function() {
         var myPresetTest = SettingsFactoryFunction()
         var newConstants = {
-            callSetting: "2.75",
-            smsSetting: "0.75",
-            warningSetting: "30.00",
-            criticalSetting: "50.00"
+            callCost: "2.75",
+            smsCost: "0.75",
+            warningLevel: "30.00",
+            criticalLevel: "50.00"
         }
         myPresetTest.updateValues(newConstants)
         myPresetTest.addFunction("call")
@@ -133,10 +135,10 @@ describe("The getColorLive settings widget)", function() {
     it("should return black as color", function() {
         var PreSetCosts = SettingsFactoryFunction();
         var constants = {
-            callSetting: "1.50",
-            smsSetting: "0.50",
-            warningSetting: "10.50",
-            criticalSetting: "15.50"
+            callCost: "1.50",
+            smsCost: "0.50",
+            warningLevel: "10.50",
+            criticalLevel: "15.50"
         }
         PreSetCosts.updateValues(constants)
         PreSetCosts.addFunction("call")
@@ -147,10 +149,10 @@ describe("The getColorLive settings widget)", function() {
     it("should return red as color", function() {
         var PreSetCosts = SettingsFactoryFunction();
         var constants = {
-            callSetting: "1.50",
-            smsSetting: "0.50",
-            warningSetting: "10.50",
-            criticalSetting: "15.50"
+            callCost: "1.50",
+            smsCost: "0.50",
+            warningLevel: "10.50",
+            criticalLevel: "15.50"
         }
         PreSetCosts.updateValues(constants)
         PreSetCosts.addFunction("call")
@@ -169,10 +171,10 @@ describe("The getColorLive settings widget)", function() {
     it("should return orange as color", function() {
         var PreSetCosts = SettingsFactoryFunction();
         var constants = {
-            callSetting: "1.50",
-            smsSetting: "0.50",
-            warningSetting: "10.50",
-            criticalSetting: "15.50"
+            callCost: "1.50",
+            smsCost: "0.50",
+            warningLevel: "10.50",
+            criticalLevel: "15.50"
         }
         PreSetCosts.updateValues(constants)
         PreSetCosts.addFunction("call")

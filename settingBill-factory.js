@@ -4,6 +4,7 @@ module.exports = function SettingsFactoryFunction() {
         var callTotalSettings = 0.00;
         var smsTotalSettings = 0.00;
         var totalSettings = 0.00;
+
         var callCost;
         var smsCost;
         var warningLevel;
@@ -13,6 +14,8 @@ module.exports = function SettingsFactoryFunction() {
 
         // functions to return
         function updateValues(settings) {
+
+
             if (checkInput(settings)) {
                 callCost = Number(settings.callCost);
                 smsCost = Number(settings.smsCost);
@@ -43,6 +46,8 @@ module.exports = function SettingsFactoryFunction() {
             return true;
         }
 
+
+
         function addFunction(item) {
             let cost = 0
             if (totalSettings < criticalLevel) {
@@ -68,11 +73,27 @@ module.exports = function SettingsFactoryFunction() {
 
         function actions() {
             return userMappedData
+
         }
 
         function actionClicked(type) {
-            return userMappedData.filter((item) => item.type === type);
+            return userMappedData.filter((item))
         }
+
+        function getColorLive() {
+            if (totalSettings === 0) {
+                return "";
+            }
+            if (totalSettings >= warningLevel && totalSettings < criticalLevel) {
+                return "warning";
+            } else if (totalSettings >= criticalLevel) {
+                return "danger";
+            } else {
+                return "";
+            }
+        }
+
+
 
         function settingsBillTotals() {
             return {
@@ -82,6 +103,7 @@ module.exports = function SettingsFactoryFunction() {
             };
         }
 
+
         // closure
         return {
             updateValues,
@@ -89,7 +111,7 @@ module.exports = function SettingsFactoryFunction() {
             addFunction,
             getColorLive,
             getSettings,
-            actions,
-            actionClicked
+            actions
         }
+
     } // factory ends here

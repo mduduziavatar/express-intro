@@ -1,21 +1,16 @@
 module.exports = function SettingsFactoryFunction() {
-
         // variables
         var callTotalSettings = 0.00;
         var smsTotalSettings = 0.00;
         var totalSettings = 0.00;
-
         var callCost;
         var smsCost;
         var warningLevel;
         var criticalLevel;
-
         var userMappedData = [];
 
         // functions to return
         function updateValues(settings) {
-
-
             if (checkInput(settings)) {
                 callCost = Number(settings.callCost);
                 smsCost = Number(settings.smsCost);
@@ -46,18 +41,18 @@ module.exports = function SettingsFactoryFunction() {
             return true;
         }
 
-
-
         function addFunction(item) {
             let cost = 0
             if (totalSettings < criticalLevel) {
                 switch (item) {
                     case "call":
                         cost = callCost;
+                        totalSettings += callCost;
                         callTotalSettings += callCost;
                         break;
                     case "sms":
                         cost = smsCost;
+                        totalSettings += smsCost;
                         smsTotalSettings += smsCost;
                         break;
                     default:
@@ -68,16 +63,16 @@ module.exports = function SettingsFactoryFunction() {
                     cost,
                     timestamp: new Date()
                 })
+                return true;
             }
         }
 
         function actions() {
             return userMappedData
-
         }
 
         function actionClicked(type) {
-            return userMappedData.filter((item))
+            return userMappedData.filter((item) => item.type === type)
         }
 
         function getColorLive() {
@@ -93,8 +88,6 @@ module.exports = function SettingsFactoryFunction() {
             }
         }
 
-
-
         function settingsBillTotals() {
             return {
                 totalSettings,
@@ -103,7 +96,6 @@ module.exports = function SettingsFactoryFunction() {
             };
         }
 
-
         // closure
         return {
             updateValues,
@@ -111,7 +103,7 @@ module.exports = function SettingsFactoryFunction() {
             addFunction,
             getColorLive,
             getSettings,
-            actions
+            actions,
+            actionClicked
         }
-
     } // factory ends here

@@ -21,7 +21,8 @@ app.use(bodyParser.json());
 app.get("/", function(req, res) {
     res.render('index', {
         values: settingsBill.getSettings(),
-        totals: settingsBill.settingsBillTotals()
+        totals: settingsBill.settingsBillTotals(),
+        getAllColors: settingsBill.getColorLive()
     });
 });
 
@@ -33,6 +34,10 @@ app.post("/settings", function(req, res) {
         warningLevel: req.body.warningLevel,
         criticalLevel: req.body.criticalLevel
     });
+    // settingsBill.getColorLive({
+    //         warningLevel: req.body.warningLevel,
+    //         criticalLevel: req.body.criticalLevel
+    //     })
     //console.log(settingsBill.getSettings());
     // note that data can be sent to the template
     res.redirect("/");
@@ -42,6 +47,8 @@ app.post("/settings", function(req, res) {
 //gets all actions clicked settings posted to server
 app.post("/action", function(req, res) {
     settingsBill.addFunction(req.body.billItemTypeWithSettings)
+    console.log(settingsBill.getColorLive());
+
     res.redirect("/");
 });
 

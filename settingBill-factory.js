@@ -1,26 +1,21 @@
 module.exports = function SettingsFactoryFunction() {
-
         // variables
         var callTotalSettings = 0.00;
         var smsTotalSettings = 0.00;
         var totalSettings = 0.00;
-
-        var callCostValue = 0.00;
-        var smsCostValue = 0.00;
-        var warningLevelValue = 0.00;
-        var criticalLevelValue = 0.00;
-
-
+        var callCost;
+        var smsCost;
+        var warningLevel;
+        var criticalLevel;
+        var userMappedData = [];
 
         // functions to return
-        function updateValues(inputFactory) {
-
-
-            if (checkInput(inputFactory)) {
-                callCostValue = Number(inputFactory.callCost);
-                smsCostValue = Number(inputFactory.smsCost);
-                warningLevelValue = Number(inputFactory.warningLevel);
-                criticalLevelValue = Number(inputFactory.criticalLevel);
+        function updateValues(settings) {
+            if (checkInput(settings)) {
+                callCost = Number(settings.callCost);
+                smsCost = Number(settings.smsCost);
+                warningLevel = Number(settings.warningLevel);
+                criticalLevel = Number(settings.criticalLevel);
                 return true;
             }
             return false;
@@ -28,10 +23,10 @@ module.exports = function SettingsFactoryFunction() {
 
         function getSettings() {
             return {
-                callCostValue,
-                smsCostValue,
-                warningLevelValue,
-                criticalLevelValue
+                callCost,
+                smsCost,
+                warningLevel,
+                criticalLevel
             }
         }
 
@@ -46,42 +41,52 @@ module.exports = function SettingsFactoryFunction() {
             return true;
         }
 
-
-
         function addFunction(item) {
-            if (totalSettings < criticalLevelValue) {
+            let cost = 0
+            if (totalSettings < criticalLevel) {
                 switch (item) {
                     case "call":
-                        totalSettings += callCostValue;
-                        callTotalSettings += callCostValue;
+                        cost = callCost;
+                        totalSettings += callCost;
+                        callTotalSettings += callCost;
                         break;
                     case "sms":
-                        totalSettings += smsCostValue;
-                        smsTotalSettings += smsCostValue;
+                        cost = smsCost;
+                        totalSettings += smsCost;
+                        smsTotalSettings += smsCost;
                         break;
                     default:
                         return false
-                };
-                return true
+                }
+                userMappedData.push({
+                    type: item,
+                    cost,
+                    timestamp: new Date()
+                })
+                return true;
             }
-            return false
+        }
 
+        function actions() {
+            return userMappedData
+        }
+
+        function actionClicked(type) {
+            return userMappedData.filter((item) => item.type === type)
         }
 
         function getColorLive() {
             if (totalSettings === 0) {
                 return "";
             }
-            if (totalSettings >= warningLevelValue && totalSettings < criticalLevelValue) {
+            if (totalSettings >= warningLevel && totalSettings < criticalLevel) {
                 return "warning";
-            } else if (totalSettings >= criticalLevelValue) {
+            } else if (totalSettings >= criticalLevel) {
                 return "danger";
             } else {
                 return "";
             }
         }
-
-
 
         function settingsBillTotals() {
             return {
@@ -91,14 +96,14 @@ module.exports = function SettingsFactoryFunction() {
             };
         }
 
-
         // closure
         return {
             updateValues,
             settingsBillTotals,
             addFunction,
             getColorLive,
-            getSettings
+            getSettings,
+            actions,
+            actionClicked
         }
-
     } // factory ends here

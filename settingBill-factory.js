@@ -61,7 +61,7 @@ module.exports = function SettingsFactoryFunction() {
                 userMappedData.push({
                     type: item,
                     cost,
-                    timestamp: new Date()
+                    timestamp: new Date(2020, 09, 21)
                 })
                 return true;
             }

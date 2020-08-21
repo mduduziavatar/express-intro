@@ -5,6 +5,8 @@ const SettingsFactoryFunction = require('./settingBill-factory');
 const app = express();
 const settingsBill = SettingsFactoryFunction();
 const PORT = process.env.PORT || 3007;
+const moment = require('moment');
+moment().format();
 
 app.listen(PORT, function() {
     console.log('App starting on port', PORT);
@@ -34,32 +36,39 @@ app.post("/settings", function(req, res) {
         warningLevel: req.body.warningLevel,
         criticalLevel: req.body.criticalLevel
     });
-    // settingsBill.getColorLive({
-    //         warningLevel: req.body.warningLevel,
-    //         criticalLevel: req.body.criticalLevel
-    //     })
     //console.log(settingsBill.getSettings());
     // note that data can be sent to the template
     res.redirect("/");
-
 });
 
 //gets all actions clicked settings posted to server
 app.post("/action", function(req, res) {
     settingsBill.addFunction(req.body.billItemTypeWithSettings)
     console.log(settingsBill.getColorLive());
-
     res.redirect("/");
 });
 
 //backend tracker of totals being clicked on the server in table format
 app.get("/actions", function(req, res) {
-    res.render("actions", { actions: settingsBill.actions() });
+    var actionTime = settingsBill.actions()
+    for (let rsa of actionTime) {
+        rsa.ago = moment(rsa.timestamp).fromNow()
+    }
+    res.render("actions", {
+        actions: settingsBill.actions(),
+        actions: actionTime
+    });
 });
 
 //backend tracker of sms and call being clicked on the server in table format
 app.get("/actions/:actionsType", function(req, res) {
     const actionsType = req.params.actionsType
-    res.render("actions", { actions: settingsBill.actionClicked(actionsType) });
-
+    var actionTime = settingsBill.actions()
+    for (let rsa of actionTime) {
+        rsa.ago = moment(rsa.timestamp).fromNow()
+    }
+    res.render("actions", {
+        actions: settingsBill.actionClicked(actionsType),
+        actions: actionTime
+    });
 });

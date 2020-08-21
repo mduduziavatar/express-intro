@@ -61,8 +61,8 @@ app.get("/actions", function(req, res) {
 app.get("/actions/:actionsType", function(req, res) {
     const actionsType = req.params.actionsType
     var actionTime = settingsBill.actions()
-    for (let rsa of actionTime) {
-        //rsa = a(rsa.timestamp)
+    for (let item of actionTime) {
+        item.ago = moment(item.timestamp).fromNow()
     }
     res.render("actions", {
         actions: settingsBill.actionClicked(actionsType),

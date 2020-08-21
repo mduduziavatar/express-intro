@@ -6,7 +6,7 @@ const app = express();
 const settingsBill = SettingsFactoryFunction();
 const PORT = process.env.PORT || 3007;
 const moment = require('moment');
-moment().format();
+moment.utc(Date).format();
 
 app.listen(PORT, function() {
     console.log('App starting on port', PORT);

@@ -59,7 +59,6 @@ app.get("/actions", function(req, res) {
 
 //backend tracker of sms and call being clicked on the server in table format
 app.get("/actions/:actionsType", function(req, res) {
-    const actionsType = req.params.actionsType
     var actionTime = settingsBill.actions()
     for (let item of actionTime) {
         item.ago = moment(item.timestamp).fromNow()

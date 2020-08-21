@@ -56,7 +56,7 @@ app.post("/action", function(req, res) {
 app.get("/actions", function(req, res) {
     var actionTime = settingsBill.actions()
     for (let rsa of actionTime) {
-        rsa.ago = moment(rsa.timestamp).fromNow()
+        rsa.ago = moment(rsa.timestamp)
     }
     res.render("actions", {
         actions: settingsBill.actions(),
@@ -69,7 +69,7 @@ app.get("/actions/:actionsType", function(req, res) {
     const actionsType = req.params.actionsType
     var actionTime = settingsBill.actions()
     for (let rsa of actionTime) {
-        rsa.ago = moment(rsa.timestamp).fromNow()
+        rsa.ago = moment(rsa.timestamp)
     }
     res.render("actions", {
         actions: settingsBill.actionClicked(actionsType),

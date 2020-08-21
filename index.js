@@ -6,11 +6,8 @@ const app = express();
 const settingsBill = SettingsFactoryFunction();
 const PORT = process.env.PORT || 3007;
 const moment = require('moment');
-var a = moment([2020, 7, 22]).fromNow();
-
-app.listen(PORT, function() {
-    console.log(a, PORT);
-});
+moment().format()
+    //var a = moment([2020, 7, 22]).fromNow();
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
@@ -51,8 +48,12 @@ app.post("/action", function(req, res) {
 //backend tracker of totals being clicked on the server in table format
 app.get("/actions", function(req, res) {
     var actionTime = settingsBill.actions()
+    for (let item of actionTime) {
+        item.ago = moment(item.timestamp).fromNow()
+    }
     res.render("actions", {
-        actions: settingsBill.actions()
+        actions: settingsBill.actions(),
+        actions: actionTime
     });
 });
 
@@ -61,10 +62,14 @@ app.get("/actions/:actionsType", function(req, res) {
     const actionsType = req.params.actionsType
     var actionTime = settingsBill.actions()
     for (let rsa of actionTime) {
-        //rsa.ago = a.format(rsa.timestamp)
+        //rsa = a(rsa.timestamp)
     }
     res.render("actions", {
         actions: settingsBill.actionClicked(actionsType),
         actions: actionTime
     });
+});
+
+app.listen(PORT, function() {
+    console.log("app starting at port:", PORT);
 });

@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const SettingsFactoryFunction = require('./settingBill-factory');
 const app = express();
 const settingsBill = SettingsFactoryFunction();
-const PORT = process.env.PORT || 3007;
 const moment = require('moment');
 moment().format()
     //var a = moment([2020, 7, 22]).fromNow();
@@ -18,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get("/", function(req, res) {
+    
     res.render('index', {
         values: settingsBill.getSettings(),
         totals: settingsBill.settingsBillTotals(),
@@ -33,7 +33,7 @@ app.post("/settings", function(req, res) {
         warningLevel: req.body.warningLevel,
         criticalLevel: req.body.criticalLevel
     });
-    //console.log(settingsBill.getSettings());
+    console.log(settingsBill.getSettings());
     // note that data can be sent to the template
     res.redirect("/");
 });
@@ -52,7 +52,7 @@ app.get("/actions", function(req, res) {
         item.ago = moment(item.timestamp).fromNow()
     }
     res.render("actions", {
-        actions: settingsBill.actions(),
+        // actions: settingsBill.actions(),
         actions: actionTime
     });
 });
@@ -64,10 +64,12 @@ app.get("/actions/:actionsType", function(req, res) {
         item.ago = moment(item.timestamp).fromNow()
     }
     res.render("actions", {
-        actions: settingsBill.actionClicked(actionsType),
+        // actions: settingsBill.actions(),
         actions: actionTime
     });
 });
+
+const PORT = process.env.PORT || 3007;
 
 app.listen(PORT, function() {
     console.log("app starting at port:", PORT);

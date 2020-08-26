@@ -89,10 +89,13 @@ module.exports = function SettingsFactoryFunction() {
         }
 
         function settingsBillTotals() {
+            let totalSett = totalSettings.toFixed(2)
+                let callTotalSett = callTotalSettings.toFixed(2)
+                let smsTotalSett = smsTotalSettings.toFixed(2)
             return {
-                totalSettings,
-                callTotalSettings,
-                smsTotalSettings
+                totalSett,
+                callTotalSett,
+                smsTotalSett
             };
         }
 
